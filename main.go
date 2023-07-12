@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"urlshortner/database"
 	"urlshortner/handlers"
 
@@ -10,10 +9,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	DB,_:=database.ConnectToDatabase()
 	database.MigrateDatabase()
-	fmt.Println(DB)
-
 	r.LoadHTMLGlob("templates/*.html")
 	r.GET("/",handlers.Home)
 	r.POST("/submit",handlers.LongToShort)
