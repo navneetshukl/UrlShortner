@@ -35,3 +35,27 @@ func MigrateDatabase() {
 	}
 	DB.AutoMigrate(&models.URL{})
 }
+
+func FindURL(short string)(models.URL){
+	var url models.URL
+	DB,_:=ConnectToDatabase()
+	result:=DB.Where("short_url=?", short).Find(&url)
+	if result.Error != nil {
+		panic("Failed to query the database")
+	}
+
+	return url
+}
+
+func InsertURL(longurl,shorturl string)(error){
+	DB,_:=ConnectToDatabase()
+	url:=models.URL{
+		LongURL: longurl,
+		ShortURL: shorturl,
+	}
+	err:=DB.Create(&url)
+	if err.Error!=nil{
+		return err.Error
+	}
+	return nil
+}
