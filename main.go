@@ -3,12 +3,12 @@ package main
 import (
 	"urlshortner/database"
 	"urlshortner/handlers"
-
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
+	r.LoadHTMLGlob("./templates/*")
 	database.MigrateDatabase()
 	r.LoadHTMLGlob("templates/*.html")
 	r.GET("/",handlers.Home)
